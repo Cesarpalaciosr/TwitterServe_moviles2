@@ -1,0 +1,11 @@
+/node_modules
+
+
+
+#archivos del back anterior
+/src/controllers/folder.controller.ts
+/src/controllers/notes.controller.ts
+/src/models/notes.ts
+/src/models/folder.ts
+
+/.env
