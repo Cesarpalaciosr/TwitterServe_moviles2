@@ -35,7 +35,8 @@ const commentSchema = new Schema({
     trim: true,
   },
   owner: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref:'User',
     unique: false,
     required: true,
     trim: true,
