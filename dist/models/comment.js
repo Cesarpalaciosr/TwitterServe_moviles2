@@ -8,61 +8,57 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
-const bcrypt_1 = __importDefault(require("bcrypt"));
-const userSchema = new mongoose_1.Schema({
-    name: {
+//EL ESQUEMA DE USUARIO
+const commentSchema = new mongoose_1.Schema({
+    idTweet: {
         type: String,
+        unique: false,
         required: true,
-    },
-    lastname: {
-        type: String,
-        required: true,
-    },
-    username: {
-        type: String,
-        unique: true,
-        required: true,
-        lowercase: true,
-    },
-    email: {
-        type: String,
-        unique: true,
-        required: true,
-        lowercase: true,
         trim: true,
     },
-    password: {
+    ownername: {
         type: String,
+        unique: false,
         required: true,
+        trim: true,
     },
-    bio: {
+    owneruser: {
         type: String,
-        required: false,
+        unique: false,
+        required: true,
+        trim: true,
     },
-    photo: {
+    owner: {
         type: String,
-        required: false,
+        unique: false,
+        required: true,
+        trim: true,
     },
+    description: {
+        type: String,
+        unique: false,
+        required: false,
+        trim: true,
+    },
+    Photo: {
+        type: String,
+        unique: false,
+        required: false,
+        trim: true,
+    },
+    profilePhoto: {
+        type: String,
+        unique: false,
+        required: false,
+        trim: true,
+    },
+    date: Date,
 });
-userSchema.pre("save", function (next) {
+commentSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
-        const user = this;
-        if (!user.isModified("password"))
-            return next();
-        const salt = yield bcrypt_1.default.genSalt(10);
-        const hash = yield bcrypt_1.default.hash(user.password, salt);
-        user.password = hash;
         next();
     });
 });
-userSchema.methods.comparePassword = function (password) {
-    return __awaiter(this, void 0, void 0, function* () {
-        return yield bcrypt_1.default.compare(password, this.password);
-    });
-};
-exports.default = (0, mongoose_1.model)('User', userSchema);
+exports.default = (0, mongoose_1.model)("comment", commentSchema);

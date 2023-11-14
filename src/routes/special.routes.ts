@@ -1,37 +1,45 @@
 import { Router } from "express";
-import {deleteUser, editpassword, edituser, FindUser} from '../controllers/user.controller'
-import {AddtoFolder, deleteNote, editContent, newNote, showDetails, showNotes, shownotesinaFolder } from "../controllers/notes.controller";
-import {deleteFolder, newFolder, showFolder } from '../controllers/folder.controller';
-import passport, { session } from "passport";
+import passport from "passport";
+
+import {deleteUser, editpassword, edituser, FindUser} from "../controllers/user.controller";
+import {deleteTweet, newTweet, search, showAllTweets, ShowFollowingTweets, showSingleTweet, showUserTweets} from "../controllers/tweet.controller";
+import {AddOrRemoveLike, CheckLike, GetLikes} from "../controllers/like.controller";
+import {CheckFollow, followorunfollow, GetFollowers, GetFollowing} from "../controllers/follow.controller";
+import {DeleteComment, getComments, GetCommentsNumber, NewComment} from "../controllers/comment.controller";
+
 
 const router = Router();
 
-
-router.get('/special', passport.authenticate('jwt', {session: false}), (req, res) => {
-    res.send('succes');
-
-})
-
+router.get("/special", passport.authenticate("jwt", { session: false }), (req, res) => {res.send("succes");});
 
 //endpoints para users
-router.post('/finduser',passport.authenticate('jwt', {session: false}),FindUser);
-router.post('/deleteuser',passport.authenticate('jwt', {session: false}),deleteUser);
-router.post('/edituser', passport.authenticate('jwt', {session:false}),edituser);
-router.post('/editpass',passport.authenticate('jwt', {session:false}),editpassword);
+router.post("/finduser", passport.authenticate("jwt", { session: false }), FindUser);
+router.post("/deleteuser", passport.authenticate("jwt", { session: false }), deleteUser);
+router.post("/edituser", passport.authenticate("jwt", { session: false }), edituser);
+router.post("/editpass", passport.authenticate("jwt", { session: false }), editpassword);
 
-//endpoints para notes
-router.post('/newnote',passport.authenticate('jwt', {session: false}),newNote);
-router.post('/shownotes',passport.authenticate('jwt', {session: false}),showNotes);
-router.post('/showdetails',passport.authenticate('jwt', {session: false}),showDetails);
-router.post('/edit',passport.authenticate('jwt', {session: false}),editContent);
-router.post('/deletenote',passport.authenticate('jwt', {session: false}),deleteNote);
-router.post('/addfolder',passport.authenticate('jwt', {session: false}),AddtoFolder);
-router.post('/showfolder',passport.authenticate('jwt', {session: false}),shownotesinaFolder);
+//endpoints para Tweets
+router.post("/newtweet", passport.authenticate("jwt", { session: false }), newTweet);
+router.post("/showuserTweets", passport.authenticate("jwt", { session: false }), showUserTweets);
+router.post("/showfollowing", passport.authenticate("jwt", { session: false }), ShowFollowingTweets);
+router.post("/showalltweets", passport.authenticate("jwt", { session: false }), showAllTweets);
+router.post("/showSingleTweet", passport.authenticate("jwt", { session: false }), showSingleTweet);
+router.post("/search", passport.authenticate("jwt", { session: false }), search);
+router.post("/like", passport.authenticate("jwt", { session: false }), AddOrRemoveLike);
+router.post("/getlikes", passport.authenticate("jwt", { session: false }), GetLikes);
+router.post("/checklike", passport.authenticate("jwt", { session: false }), CheckLike);
+router.post("/deleteTweet", passport.authenticate("jwt", { session: false }), deleteTweet);
 
-//endpoints para carpetas
-router.post('/newfolder',passport.authenticate('jwt', {session: false}),newFolder);
-router.post('/showfolder',passport.authenticate('jwt', {session: false}),showFolder);
-router.post('/deletefolder',passport.authenticate('jwt', {session: false}),deleteFolder);
+//endpoints para followers
+router.post("/follow", passport.authenticate("jwt", { session: false }), followorunfollow);
+router.post("/getfollowers", passport.authenticate("jwt", { session: false }), GetFollowers);
+router.post("/getFollowing", passport.authenticate("jwt", { session: false }), GetFollowing);
+router.post("/checkfollow", passport.authenticate("jwt", { session: false }), CheckFollow);
 
+//endpoints para comentarios
+router.post("/newComment", passport.authenticate("jwt", { session: false }), NewComment);
+router.post("/getcomments", passport.authenticate("jwt", { session: false }), getComments);
+router.post("/getnumbercomments", passport.authenticate("jwt", { session: false }), GetCommentsNumber);
+router.post("/deletecomment", passport.authenticate("jwt", { session: false }), DeleteComment);
 
-export default router
+export default router;

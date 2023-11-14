@@ -25,7 +25,7 @@ app.use(passport_1.default.initialize());
 passport_1.default.use(passport_2.default);
 //routes
 app.get('/', (req, res) => {
-    res.send(`The API is running on port:${app.get('port')}`);
+    res.send(`Hola, es el endpoint por defecto`);
 });
 app.use(auth_routes_1.default);
 app.use(special_routes_1.default);

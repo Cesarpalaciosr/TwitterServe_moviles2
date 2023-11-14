@@ -25,7 +25,7 @@ passport.use(passportMiddleware);
 
 //routes
 app.get('/', (req, res) => {
-    res.send(`The API is running on port:${app.get('port')}`);
+    res.send(`Hola, es el endpoint por defecto`);
 });
 app.use(authRoutes);
 app.use(specialRoutes);

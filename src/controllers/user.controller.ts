@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import User, { IUser } from "../models/user";
 import jwt from "jsonwebtoken";
 import config from "../config/config";
-// import  Notes from "../models/notes";
+import Tweet from "../models/tweet";
 import bcrypt from "bcrypt";
 
 function createToken(user: IUser) {
@@ -30,7 +30,7 @@ export const signUp = async (
   if (!req.body.username || !req.body.email || !req.body.password) {
     return res
       .status(400)
-      .json({ msg: "Please. Send your email and password" });
+      .json({ msg: "Asegurese de ingresar bien su email y contraseña" });
   }
 
   //Busca coincidencias en la base de datos con el email o username proporcionado
@@ -41,7 +41,7 @@ export const signUp = async (
   console.log(user);
 
   if (user) {
-    return res.status(400).json({ msg: "The user already exist" });
+    return res.status(400).json({ msg: "El usuario ya existe" });
   }
 
   const newUser = new User(req.body);
@@ -97,7 +97,6 @@ export const deleteUser = async (
   }
 
   await User.deleteOne({ _id: req.body._id });
-  await Notes.deleteMany({ owner: req.body.owner });
   return res.status(201).json({ msg: "Cuenta eliminada con exito" });
 };
 
@@ -111,6 +110,7 @@ export const edituser = async (
       name: req.body.name,
       lastname: req.body.lastname,
       username: req.body.username,
+      bio: req.body.bio,
     }
   );
   if (!user) {
